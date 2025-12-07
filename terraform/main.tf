@@ -17,3 +17,7 @@ resource "aws_instance" "studentapp" {
      docker compose up -d
      EOT
 }
+
+output "studentapp_publicip" {
+  value = aws_instance.studentapp.public_ip
+}
