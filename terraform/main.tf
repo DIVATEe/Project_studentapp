@@ -34,7 +34,7 @@ resource "aws_instance" "studentapp" {
 	    PRIMARY KEY (student_id)  
       );
       EOF
-      
+
      sed -i 's|url="jdbc:mysql://[^"]*"|url="jdbc:mysql://${aws_db_instance.studentapp_db.address}:3306/studentapp"|' /mnt/studentapp/context.xml
 
      EOT
@@ -54,8 +54,9 @@ resource "aws_db_instance" "studentapp_db" {
 }
 
 
-
-
 output "studentapp_publicip" {
   value = aws_instance.studentapp.public_ip
+}
+output "studentapp_db_endpoint" {
+  value = aws_db_instance.studentapp_db.address
 }
