@@ -8,7 +8,7 @@ variable "studentapp_key_name" {
   default = "Oct30"
 }
 variable "studentapp_vpc_security_group_ids" {
-  default = "sg-0a1badee4156834ca"
+  default = "sg-010adf386a40c09b0"
 }
 variable "studentapp_disable_api_termination" {
   default = "false"
