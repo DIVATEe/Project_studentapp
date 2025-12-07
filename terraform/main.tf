@@ -17,8 +17,10 @@ resource "aws_instance" "studentapp" {
 
      docker compose up -d
      
-     mysql -h ${aws_db_instance.studentapp_db.address} -u admin -p${var.studentapp_db_password}
-
+     DB_HOST="${aws_db_instance.studentapp_db.address}
+     DB_USER="admin"
+     DB_PASS="${var.studentapp_db_password}
+     mysql -h ${aws_db_instance.studentapp_db.address} -u admin -p${var.studentapp_db_password} <<EOF
      create database  studentapp;
      use studentapp;
       CREATE TABLE if not exists students(student_id INT NOT NULL AUTO_INCREMENT,  
@@ -30,22 +32,21 @@ resource "aws_instance" "studentapp" {
 	    student_year_passed VARCHAR(10) NOT NULL,  
 	    PRIMARY KEY (student_id)  
       );
-      show tables;
-      exit
+      EOF
 
      EOT
 }
 
 resource "aws_db_instance" "studentapp_db" {
-  identifier = "studentapp"
-  db_name = var.studentapp_db_db_name
-  username = var.studentapp_db_username
-  password = var.studentapp_db_password
-  instance_class = var.studentapp_db_instance_class
-  allocated_storage = var.studentapp_db_allocated_storage
-  engine = "MariaDB"
-  engine_version = "11.4.8"
-  skip_final_snapshot = true
+  identifier             = "studentapp"
+  db_name                = var.studentapp_db_db_name
+  username               = var.studentapp_db_username
+  password               = var.studentapp_db_password
+  instance_class         = var.studentapp_db_instance_class
+  allocated_storage      = var.studentapp_db_allocated_storage
+  engine                 = "MariaDB"
+  engine_version         = "11.4.8"
+  skip_final_snapshot    = true
   vpc_security_group_ids = [var.studentapp_vpc_security_group_ids]
 }
 
