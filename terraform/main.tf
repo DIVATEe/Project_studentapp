@@ -9,6 +9,7 @@ resource "aws_instance" "studentapp" {
      sudo apt update -y
      sudo apt install mysql-client -y
 
+     cd /mnt
      git clone https://github.com/DIVATEe/studentapp.git
      cd studentapp/
 
@@ -33,6 +34,8 @@ resource "aws_instance" "studentapp" {
 	    PRIMARY KEY (student_id)  
       );
       EOF
+      
+     sed -i 's|url="jdbc:mysql://[^"]*"|url="jdbc:mysql://${aws_db_instance.studentapp_db.address}:3306/studentapp"|' /mnt/studentapp/context.xml
 
      EOT
 }
