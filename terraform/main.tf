@@ -7,6 +7,7 @@ resource "aws_instance" "studentapp" {
   user_data               = <<-EOT
     #!/bin/bash
      sudo apt update -y
+     sudo apt install mysql-client -y
 
      git clone https://github.com/DIVATEe/studentapp.git
      cd studentapp/
@@ -15,6 +16,8 @@ resource "aws_instance" "studentapp" {
      sh dockerinstall.sh
 
      docker compose up -d
+     
+     mysql -h ${aws_db_instance.studentapp_db.address} -u admin -p${var.studentapp_db_password}
      EOT
 }
 
