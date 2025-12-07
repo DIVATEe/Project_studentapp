@@ -30,6 +30,7 @@ resource "aws_db_instance" "studentapp_db" {
   allocated_storage = var.studentapp_db_allocated_storage
   engine = "MariaDB"
   engine_version = "11.4.8"
+  skip_final_snapshot = true
 }
 
 
