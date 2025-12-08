@@ -51,6 +51,7 @@ resource "aws_db_instance" "studentapp_db" {
   engine_version         = "11.4.8"
   skip_final_snapshot    = true
   vpc_security_group_ids = [var.studentapp_vpc_security_group_ids]
+  publicly_accessible = true
 }
 
 
