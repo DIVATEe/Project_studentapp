@@ -18,12 +18,12 @@ resource "aws_instance" "studentapp" {
 
      docker compose up -d
      
-     DB_HOST="${aws_db_instance.studentapp_db.address}
+     DB_HOST="${aws_db_instance.studentapp_db.address}"
      DB_USER="admin"
-     DB_PASS="${var.studentapp_db_password}
-     mysql -h ${aws_db_instance.studentapp_db.address} -u admin -p${var.studentapp_db_password} <<EOF
-     create database  studentapp;
-     use studentapp;
+     DB_PASS="${var.studentapp_db_password}"
+     mysql -h "$DB_HOST" -u "$DB_USER -p"$DB_PASS <<EOF
+      CREATE DATABASE IF NOT EXISTS studentapp;
+      use studentapp;
       CREATE TABLE if not exists students(student_id INT NOT NULL AUTO_INCREMENT,  
 	    student_name VARCHAR(100) NOT NULL,  
 	    student_addr VARCHAR(100) NOT NULL,   
